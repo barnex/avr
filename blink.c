@@ -1,8 +1,11 @@
+/*
+	Running LED on ports B and D.
+ */
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdint.h>
 #include <stdbool.h>
-
 
 int main (void) {
 
