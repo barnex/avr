@@ -1,5 +1,6 @@
-#define BAUD     4800
+#define BAUD     57600
 #define BAUD_TOL 2
+#undef  USE_2X
 
 #define UART_PORT_DDR DDRD
 #define UART_RX_PIN   PIN0
@@ -15,7 +16,6 @@
 void uart_init() {
 	UBRR0H = UBRRH_VALUE;
 	UBRR0L = UBRRL_VALUE;
-#undef USE_2X
 #ifdef USE_2X
 	UCSR0A |= _BV(U2X0);
 #else
@@ -28,7 +28,6 @@ void uart_init() {
 
 	UCSR0C = 0;
 	UCSR0C |= _BV(UCSZ01) | _BV(UCSZ00); // 8-bit
-	//UCSR0C |= _BV(USBS0); // stop-bit
 }
 
 
