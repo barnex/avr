@@ -8,8 +8,8 @@ char msg[LEN_MSG] = "Hello, world!\n";
 
 int main() {
 
-	panic();
 	uart_init();
+	kprintln("uart init");
 
 	for (;;) {
 		led_on();

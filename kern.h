@@ -6,4 +6,8 @@
 
 void panic();
 
+void kprintln(char* str);
+
+void uart_write_async(uint8_t *x, uint8_t len);
+
 #endif
