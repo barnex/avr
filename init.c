@@ -1,5 +1,4 @@
-#include "led.h"
-#include "uart.h"
+#include "kern.h"
 
 #include <stdint.h>
 #include <util/delay.h>
@@ -9,6 +8,7 @@ char msg[LEN_MSG] = "Hello, world!\n";
 
 int main() {
 
+	panic();
 	uart_init();
 
 	for (;;) {
