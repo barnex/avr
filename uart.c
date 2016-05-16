@@ -19,7 +19,7 @@ void uart_init() {
 #ifdef USE_2X
 	UCSR0A |= _BV(U2X0);
 #else
-    UCSR0A &= ~(_BV(U2X0));
+	UCSR0A &= ~(_BV(U2X0));
 #endif
 
 	UART_PORT_DDR |= _BV(UART_TX_PIN); // TX: out
