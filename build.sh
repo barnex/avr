@@ -1,5 +1,4 @@
 set -e
-set -v
 
 rm -f *.hex
 avr-gcc -Os -std=c99 -Wall -Werror -mmcu=atmega328p -DF_CPU=16000000L -MMD *.c -o kern
