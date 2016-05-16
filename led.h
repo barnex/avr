@@ -8,4 +8,6 @@ void led_on();
 // led_off turns the on-board LED off.
 void led_off();
 
+void led_toggle();
+
 #endif

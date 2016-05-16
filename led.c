@@ -14,3 +14,8 @@ inline void led_on() {
 inline void led_off() {
 	LED_PORT &= ~_BV(LED_PIN);
 }
+
+inline void led_toggle() {
+	LED_PORT_DDR |= _BV(LED_PIN);
+	LED_PORT ^= _BV(LED_PIN);
+}

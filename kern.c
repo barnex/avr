@@ -5,18 +5,17 @@
 #include <util/delay.h>
 
 
-void panic(){
+void panic() {
 	cli();
-	for(;;){
-		led_off();
-		_delay_ms(200);
-		led_on();
+	for(;;) {
+		led_toggle();
 		_delay_ms(200);
 	}
 }
 
-void kprintln(char* str){
-	while(*str != 0){
+
+void kprintln(char* str) {
+	while(*str != 0) {
 		uart_put_sync(*str);
 		str++;
 	}
