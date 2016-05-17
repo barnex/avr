@@ -1,8 +1,10 @@
 #include "usart.h"
+#include "led.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 
 #define BAUD     57600
@@ -13,6 +15,13 @@
 #define UART_RX_PIN   PIN0
 #define UART_TX_PIN   PIN1
 #include <util/setbaud.h>
+
+
+// for asynchronous writing
+static volatile uint8_t *async_tx_buf = 0;
+static volatile uint8_t async_tx_pos = 0;
+static volatile uint8_t async_tx_len = 0;
+static volatile bool async_tx_busy = false;
 
 
 void usart_init() {
@@ -33,18 +42,30 @@ void usart_init() {
 
 
 void usart_write_sync(uint8_t b) {
-	// spin while buffer becomes empty
-	while (!(UCSR0A & _BV(UDRE0))) {
+	// spin while buffer becomes empty and async tx finishes
+	while (async_tx_busy || !(UCSR0A & _BV(UDRE0))) {
 	}
 	UDR0 = b;
 }
 
-void usart_write_async(){
+void usart_write_async(uint8_t *data, uint8_t len) {
+	while(async_tx_busy) { // wait for previous operation
+	}
+	async_tx_buf = data;
+	async_tx_pos = 0;
+	async_tx_len = len;
+	async_tx_busy = true;
+
 	UCSR0B |= _BV(UDRIE0); // enable buffer empty interrupt
 }
 
 //UDR0 Empty interrupt service routine
 ISR(USART_UDRE_vect) {
-	UDR0 = 'B';
-	return;
+	if(async_tx_pos != async_tx_len) {
+		UDR0 = async_tx_buf[async_tx_pos];
+		async_tx_pos++;
+	} else {
+		UCSR0B &= ~_BV(UDRIE0); // disable buffer empty interrupt
+		async_tx_busy = false;
+	}
 }
