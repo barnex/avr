@@ -1,6 +1,7 @@
-#include "uart.h"
+#include "usart.h"
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include <stdint.h>
 
 
@@ -14,7 +15,7 @@
 #include <util/setbaud.h>
 
 
-void uart_init() {
+void usart_init() {
 	// init speed based on BAUD, BAUD_TOL, USE_2X
 	UBRR0H = UBRRH_VALUE;
 	UBRR0L = UBRRL_VALUE;
@@ -31,10 +32,19 @@ void uart_init() {
 }
 
 
-void uart_put_sync(uint8_t b) {
+void usart_write_sync(uint8_t b) {
 	// spin while buffer becomes empty
 	while (!(UCSR0A & _BV(UDRE0))) {
 	}
 	UDR0 = b;
 }
 
+void usart_write_async(){
+	UCSR0B |= _BV(UDRIE0); // enable buffer empty interrupt
+}
+
+//UDR0 Empty interrupt service routine
+ISR(USART_UDRE_vect) {
+	UDR0 = 'B';
+	return;
+}

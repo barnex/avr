@@ -1,4 +1,5 @@
 #include "kern.h"
+#include "usart.h"
 
 #include <stdint.h>
 #include <util/delay.h>
@@ -10,10 +11,9 @@ char msg[LEN_MSG] = "Hello, world!\n";
 
 int main() {
 
-	uart_init();
-	kprintln("\nUART initialized");
+	usart_init();
+	kprintln("\nUSART initialized");
 
-	UCSR0B |= _BV(UDRIE0); // enable buffer empty interrupt
 
 	kprintln("enabling interrupts");
 	sei();
@@ -24,9 +24,3 @@ int main() {
 	return 1;
 }
 
-//UDR0 Empty interrupt service routine
-ISR(USART_UDRE_vect) {
-	UDR0 = 'B';
-	_delay_ms(100);
-	return;
-}
