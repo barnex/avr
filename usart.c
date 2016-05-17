@@ -69,3 +69,10 @@ ISR(USART_UDRE_vect) {
 		async_tx_busy = false;
 	}
 }
+
+
+uint8_t usart_read_sync() {
+	while ( !(UCSR0A & _BV(RXC0)) ) {
+	}
+	return UDR0;
+}
