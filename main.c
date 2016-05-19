@@ -29,11 +29,12 @@ int main() {
 
 
 	for(;;) {
-		uint8_t cmd;
-		do {
-			cmd = usart_read_sync();
-		} while(cmd == 0);
-		uint8_t val = usart_read_sync();
+		usart_write_sync(usart_read_sync());
+	//	uint8_t cmd;
+	//	do {
+	//		cmd = usart_read_sync();
+	//	} while(cmd == 0);
+	//	uint8_t val = usart_read_sync();
 	}
 
 	return 1;
