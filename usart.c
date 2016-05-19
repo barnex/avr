@@ -10,11 +10,11 @@
 #define BAUD     57600
 #define BAUD_TOL 2
 #undef  USE_2X
+#include <util/setbaud.h>
 
 #define UART_PORT_DDR DDRD
 #define UART_RX_PIN   PIN0
 #define UART_TX_PIN   PIN1
-#include <util/setbaud.h>
 
 
 // for asynchronous writing

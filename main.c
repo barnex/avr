@@ -22,11 +22,18 @@ int main() {
 	usart_write_async((uint8_t*)"Bye async usart!\n", 18);
 	kprintln("This is yet one more sync write.");
 
+	kprintx(1);
+	kprintx(127);
+
 	timer_init(TIMER_PRESCALE_1024, 16000, led_toggle);
 
 
 	for(;;) {
-		usart_write_sync(usart_read_sync());
+		uint8_t cmd;
+		do {
+			cmd = usart_read_sync();
+		} while(cmd == 0);
+		uint8_t val = usart_read_sync();
 	}
 
 	return 1;

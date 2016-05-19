@@ -3,7 +3,7 @@
 
 static void (*isr)() = 0;
 
-void timer_init(uint8_t prescale_mask, uint16_t ticks, void (*f)() ){
+void timer_init(uint8_t prescale_mask, uint16_t ticks, void (*f)() ) {
 	isr = f;
 	TCCR1B |= _BV(WGM12);      // CTC mode
 	TCCR1B |= (prescale_mask);
