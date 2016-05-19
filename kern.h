@@ -11,4 +11,6 @@ void panic();
 // The implementation is synchronous and works without using interrupts.
 void kprintln(char* str);
 
+void kprintx(int n);
+
 #endif
