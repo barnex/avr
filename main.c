@@ -1,5 +1,6 @@
 #include "kern.h"
 #include "led.h"
+#include "spi.h"
 #include "timer.h"
 #include "usart.h"
 
@@ -10,31 +11,31 @@
 
 int main() {
 
+	led_on();
 	usart_init();
 	kprintln("\nUSART initialized");
 
-	kprintln("enabling interrupts");
-	sei();
+	//spi_init_slave();
+	//kprintln("SPI slave");
 
-	kprintln("This is a sync write.");
-	usart_write_async((uint8_t*)"Hello async usart!\n", 19);
-	kprintln("This is another sync write.");
-	usart_write_async((uint8_t*)"Bye async usart!\n", 18);
-	kprintln("This is yet one more sync write.");
+	spi_init_master();
+	kprintln("SPI master");
 
-	kprintx(1);
-	kprintx(127);
-
-	timer_init(TIMER_PRESCALE_1024, 16000, led_toggle);
-
+	//kprintln("enabling interrupts");
+	//sei();
 
 	for(;;) {
-		usart_write_sync(usart_read_sync());
-	//	uint8_t cmd;
-	//	do {
-	//		cmd = usart_read_sync();
-	//	} while(cmd == 0);
-	//	uint8_t val = usart_read_sync();
+		kprintx(SPSR);
+		kprintln(" SPSR.");
+		kprintln("SPI write...");
+		SPDR = 'A';
+		kprintx(SPSR);
+		kprintln(" SPSR.");
+		kprintx(SPDR);
+		kprintln(" SPI data.");
+		kprintx(SPSR);
+		kprintln(" SPSR.");
+		for (uint16_t i = 0; i< 10000; i++) {}
 	}
 
 	return 1;

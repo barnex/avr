@@ -1,12 +1,12 @@
-#ifndef _UART_H_
-#define _UART_H_
+#ifndef _USART_H_
+#define _USART_H_
 
 #include <stdint.h>
 
-// usart_init initializes the UART.
+// usart_init initializes the USART.
 // Baud rate is controlled by the macros:
 // 	BAUD, BAUD_TOL, USE_2X
-// 	UART_PORT_DDR, UART_RX_PIN, UART_TX_PIN
+// 	USART_PORT_DDR, USART_RX_PIN, USART_TX_PIN
 // Protocol is 8 bits, no parity, 1 stop bit.
 void usart_init();
 
