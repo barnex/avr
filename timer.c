@@ -1,7 +1,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "kern.h"
 
-static void (*isr)() = 0;
+static void (*isr)() = panic;
 
 void timer_init(uint8_t prescale_mask, uint16_t ticks, void (*f)() ) {
 	isr = f;
