@@ -27,14 +27,15 @@ int main() {
 	//sei();
 
 
-	for(int i=0; i<3; i++) {
+	for(int i=0; i<5; i++) {
 
-		kprintx(SPSR); kprintln(" SPSR.");
-		SPDR = 'A';
-		kprintx(SPSR); kprintln(" SPSR.");
+		kprintx(spi_tx(42)); kprintln(" spi_tx");
+		//kprintx(SPSR); kprintln(" SPSR.");
+		//SPDR = 'A';
+		//kprintx(SPSR); kprintln(" SPSR.");
 
-		kprintln("delay");
-		_delay_ms(1000);
+		//kprintln("delay");
+		//_delay_ms(1000);
 
 		//SPSR &= ~_BV(SPIF);
 

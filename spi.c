@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "led.h"
+#include "kern.h"
 
 #define SPI_F_4   ((0 << SPR1) | (0 << SPR0))
 #define SPI_F_16  ((0 << SPR1) | (1 << SPR0))
@@ -40,7 +41,11 @@ void spi_init_slave() {
 	SPCR = _BV(SPE);
 }
 
+// SPIE must be disalbed
 uint8_t spi_tx(uint8_t data) {
+	if (SPCR & _BV(SPIE)){
+		panic();
+	}
     SPDR = data;
     while(!(SPSR & (_BV(SPIF)) ));
     return SPDR ;
