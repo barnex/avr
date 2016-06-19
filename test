@@ -1,7 +1,14 @@
 #! /bin/bash
+#
+# Usage:
+#
+# 	./test main1.c main2.c ...
+#
+# This calls build on all main files, separately, to make sure they compile.
 
 set -e
 
 for f in *c; do
 	./build $f;
 done;
+rm -f img *.d *.hex

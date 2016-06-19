@@ -1,7 +1,13 @@
 #! /bin/bash
+#
+# Usage:
+#
+# 	./build main_file.c
+#
+# This compiles main_file.c, links with drivers and outputs img.hex
 
 set -e
-rm -f  *.o kern *.d *.hex
+rm -f  *.o img *.d *.hex
 set -v
-avr-gcc -Os -std=c99 -Wall -Werror -mmcu=atmega328p -DF_CPU=16000000L -MMD $@ driver/*.c -o kern
-avr-objcopy -O ihex -R .eeprom kern kern.hex
+avr-gcc -Os -std=c99 -Wall -Werror -mmcu=atmega328p -DF_CPU=16000000L -MMD $@ driver/*.c -o img
+avr-objcopy -O ihex -R .eeprom img img.hex
