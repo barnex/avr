@@ -9,6 +9,8 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
+//static volatile int dump;
+
 int main() {
 
 	led_on();
@@ -24,19 +26,21 @@ int main() {
 	//kprintln("enabling interrupts");
 	//sei();
 
-	for(;;) {
-		kprintx(SPSR);
-		kprintln(" SPSR.");
-		kprintln("SPI write...");
+
+	for(int i=0; i<3; i++) {
+
+		kprintx(SPSR); kprintln(" SPSR.");
 		SPDR = 'A';
-		kprintx(SPSR);
-		kprintln(" SPSR.");
-		kprintx(SPDR);
-		kprintln(" SPI data.");
-		kprintx(SPSR);
-		kprintln(" SPSR.");
-		for (uint16_t i = 0; i< 10000; i++) {}
+		kprintx(SPSR); kprintln(" SPSR.");
+
+		kprintln("delay");
+		_delay_ms(1000);
+
+		//SPSR &= ~_BV(SPIF);
+
 	}
+
+	for (;;){}
 
 	return 1;
 }
