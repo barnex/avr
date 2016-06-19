@@ -1,8 +1,8 @@
-#include "kern.h"
-#include "led.h"
-#include "spi.h"
-#include "timer.h"
-#include "usart.h"
+#include "driver/debug.h"
+#include "driver/led.h"
+#include "driver/spi.h"
+#include "driver/timer.h"
+#include "driver/usart.h"
 
 #include <stdint.h>
 #include <util/delay.h>
@@ -15,26 +15,26 @@ int main() {
 
 	led_on();
 	usart_init();
-	kprintln("\nUSART initialized");
+	debugln("\nUSART initialized");
 
 	//spi_init_slave();
-	//kprintln("SPI slave");
+	//debugln("SPI slave");
 
 	spi_init_master();
-	kprintln("SPI master");
+	debugln("SPI master");
 
-	//kprintln("enabling interrupts");
+	//debugln("enabling interrupts");
 	//sei();
 
 
 	for(int i=0; i<5; i++) {
 
-		kprintx(spi_tx(42)); kprintln(" spi_tx");
-		//kprintx(SPSR); kprintln(" SPSR.");
+		debugx(spi_tx(42)); debugln(" spi_tx");
+		//debugx(SPSR); debugln(" SPSR.");
 		//SPDR = 'A';
-		//kprintx(SPSR); kprintln(" SPSR.");
+		//debugx(SPSR); debugln(" SPSR.");
 
-		//kprintln("delay");
+		//debugln("delay");
 		//_delay_ms(1000);
 
 		//SPSR &= ~_BV(SPIF);
