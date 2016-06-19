@@ -17,9 +17,8 @@
 void spi_init_master() {
 
 	SPI_PORT_DDR = _BV(SPI_MOSI_PIN) | _BV(SPI_SCK_PIN) | _BV(SPI_SS_N_PIN);	 // enable output
-	//SPCR = _BV(SPE) | _BV(MSTR) | SPI_F_64; // | _BV(SPIE);
-	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);
-	SPI_PORT &=~ _BV(SPI_SS_N_PIN); // TODO: not
+	SPCR = _BV(SPE) | _BV(MSTR) | SPI_F_128; // | _BV(SPIE);
+	SPI_PORT &=~ _BV(SPI_SS_N_PIN); // slave select
 
 	// SPCR
 	// _BV: SPIE // interrupt enable
